@@ -1,0 +1,51 @@
+#include <bits/stdc++.h>
+using namespace std;
+struct TriesNode{
+    map<char,TriesNode*>children;
+    bool endofword;
+    TriesNode(){
+        endofword=false;
+    }
+};
+void insert(TriesNode *root,string word){
+    TriesNode *current=root;
+    for(int i=0;i<word.size();i++){
+        char ch=word[i];
+        TriesNode *node=current->children[ch];
+        if(!node){
+            node=new TriesNode();
+            current->children[word[i]]=node;
+        }
+        current=node;
+    }
+    current->endofword=true;
+}
+bool search(TriesNode *root,string word){
+    TriesNode *current=root;
+    for(int i=0;i<word.size();i++){
+        char ch=word[i];
+        TriesNode *node=current->children[ch];
+        if(!node)
+        return false;
+        current=node;
+    }
+    return true;
+}
+int main() {
+	TriesNode *root=new TriesNode();
+	string keys[] = {"the", "a", "there", 
+                    "answer", "any", "by", 
+                     "bye", "their" }; 
+                      int n = sizeof(keys)/sizeof(keys[0]);
+                      
+         for (int i = 0; i < n; i++) 
+        insert(root, keys[i]); 
+        string s;
+        cin>>s;
+        int x=search(root,s);
+        if(x)
+        cout<<"exist";
+        else
+        cout<<"do not exist";
+        return 0;
+}
