@@ -1,0 +1,32 @@
+int Solution::isSymmetric(TreeNode* A) {
+    queue<TreeNode*>q;
+    if(A==NULL)return true;
+    if(!A->left && !A->right)
+    return true;
+    q.push(A);
+    q.push(A);
+    TreeNode* leftNode;
+    TreeNode* rightNode;
+    while(!q.empty()){
+    leftNode=q.front();
+    q.pop();
+    rightNode=q.front();
+    q.pop();
+    if(leftNode->val!=rightNode->val)
+       return false;
+     if(leftNode->left && rightNode->right){
+         q.push(leftNode->left);
+         q.push(rightNode->right);
+     }
+     else if(leftNode->left||rightNode->right)
+     return false;
+     if(leftNode->right && rightNode->left)
+     {
+         q.push(leftNode->right);
+         q.push(rightNode->left);
+     }
+    else if(leftNode->right||rightNode->left)
+    return false;
+    }
+    return true;
+}
