@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+# define size 100
+class Stack{
+    public:
+    int top;
+    int a[size];
+    Stack() {top=-1;}
+
+void push(int x){
+    if(top>=(size-1)){
+         cout<<"full stack"<<endl;
+    }
+    else{
+        a[++top]=x;
+        cout<<x<<"pushed into stack"<<endl;
+    }
+}
+int pop(){
+    if(top<0){
+        cout<<"stack underflow";
+        return 0;
+    }
+    else{
+        int x=a[top--];
+        return x;
+    }
+}
+};
+int main() {
+    Stack s;
+    s.push(1);
+    s.push(2);
+	s.push(3);
+	s.push(4);
+	cout<<s.pop()<<endl;
+	cout<<s.pop()<<endl;
+	return 0;
+}
