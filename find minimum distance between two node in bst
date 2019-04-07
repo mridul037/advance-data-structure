@@ -1,0 +1,68 @@
+#include <iostream>
+using namespace std;
+struct Node { 
+    struct Node* left, *right; 
+    int data; 
+}; 
+  
+struct Node* newNode(int key) 
+{ 
+    struct Node* ptr = new Node; 
+    ptr->data = key; 
+    ptr->left = ptr->right = NULL; 
+    return ptr; 
+} 
+  
+// Standard BST insert function 
+struct Node* insert(struct Node* root, int key) 
+{ 
+    if (!root) 
+        root = newNode(key); 
+    else if (root->data > key) 
+        root->left = insert(root->left, key); 
+    else if (root->data < key) 
+        root->right = insert(root->right, key); 
+    return root; 
+} 
+///----distance of node from root----////
+int dist(Node* root,int x){
+    if(root->data==x)return 0;
+    else if(root->data>x)
+    return 1+dist(root->left,x);
+    
+    return 1+dist(root->right,x);
+}
+//////--------------LCA_______________________//////
+struct Node* lca(struct Node* root,int a,int b){
+    if(!root)return 0;
+    if(root->data>a && root->data>b)
+   return lca(root->left,a,b);
+    else if (root->data<a && root->data<b)
+    return    lca(root->right,a,b);
+    else
+    return root; 
+}
+////--------function----------//////////
+void function(struct Node* root,int x,int y) 
+{
+    int d1=dist(root,x);//distance of node 1
+	int d2=dist(root,y);//dist of node 2
+	struct Node* temp=lca(root,x,y);
+	int d3=dist(root,temp->data);
+	cout<<d1+d2-2*d3;
+
+}
+int main() 
+{ 
+    struct Node* root = NULL; 
+    root = insert(root, 20); 
+    insert(root, 10); 
+    insert(root, 5); 
+    insert(root, 15); 
+    insert(root, 30); 
+    insert(root, 25); 
+    insert(root, 35); 
+    int a = 5, b = 55; 
+ function(root, 5, 35); 
+    return 0; 
+} 
