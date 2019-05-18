@@ -1,0 +1,102 @@
+#include <bits/stdc++.h>
+#include<climits>
+using namespace std;
+void swap(int *x, int *y) 
+{ 
+    int temp = *x; 
+    *x = *y; 
+    *y = temp; 
+} 
+
+class Heap{
+    int *harr;
+    int capacity;
+    int heap_size;
+    public:
+    Heap(int capacity);
+    void minheapify(int);
+    int parent(int i){return (i-1)/2;}
+    int left(int i){return (2*i+1);}
+    int right(int i){return (2*i+2);}
+    int extract();
+    void decreaseKey(int i,int new_val);
+    int getmin(){return harr[0];}
+    void deletekey(int i);
+    void insertkey(int k);
+};
+Heap::Heap(int cap){
+    heap_size=0;
+    capacity=cap;
+    harr=new int[cap];
+}
+void Heap::insertkey(int k){
+    if(heap_size==capacity)
+    {cout<<"overflow";return;}
+    heap_size++;
+    int i=heap_size-1;
+    harr[i]=k;
+    while(i!=0 && harr[parent(i)]>harr[i])
+    {
+        swap(&harr[i],&harr[parent(i)]);
+        i=parent(i);
+    }
+}    
+void Heap::decreaseKey(int i,int new_val){
+harr[i]=new_val;
+while(i!=0 && harr[parent(i)]>harr[i]){
+    swap(&harr[i],&harr[parent(i)]);
+    i=parent(i);
+    }
+}
+int Heap::extract(){
+    if(heap_size<=0)
+    return INT_MIN;
+    if(heap_size==1)
+    {
+        heap_size--;
+        return harr[0];
+    }
+    int root=harr[0];
+    harr[0]=harr[heap_size-1];
+    heap_size--;
+    minheapify(0);
+    return root;
+}
+void Heap::deletekey(int i){
+    cout<<harr[i]<<endl;
+    decreaseKey(i,INT_MIN);
+    
+    extract();
+}
+void Heap::minheapify(int i)
+{
+    int l=left(i);
+    int r=right(i);
+    int smallest=i;
+    if(l<heap_size && harr[l]<harr[i])
+    smallest=l;
+    if(r<heap_size && harr[r]<harr[smallest])
+    smallest=r;
+    if(smallest!=i )
+    {
+        swap(&harr[i],&harr[smallest]);
+        minheapify(smallest);
+    }
+}
+
+int main(){
+    Heap h(11);
+    h.insertkey(3);
+    h.insertkey(2);
+    h.deletekey(1);
+    h.insertkey(15);
+    h.insertkey(5);
+    h.insertkey(4);
+    h.insertkey(45);
+    cout<<h.extract()<<" ";
+    cout<<h.getmin()<<" ";
+    h.decreaseKey(2,1);
+    cout<<h.getmin();
+    return 0;
+    
+}
