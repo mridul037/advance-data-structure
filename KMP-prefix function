@@ -5,7 +5,7 @@ void fUNCTION(string s){
         a[1]=0;
         int i=0,j=1;
         while(j<s.length()&& i<j){
-         if(s[i]==s[j]){i++;
+         if(s[i]==s[j]){i++;         // match in string//
              a[j]=i;
              j++;
          }   
