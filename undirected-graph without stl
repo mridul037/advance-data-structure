@@ -1,22 +1,37 @@
 #include <iostream>
 using namespace std;
+
+//--------------CRAETE NODE STRUCTURE----------------//
+
 struct adjNode{
 	int dest;
 	struct adjNode* next;
 };
+
+//-------------HEAD POINTER----------------//
+
 struct  adjList{
 	struct adjNode* head;
 };
+
+//-------------CREATE NODE-------------//////
+
 struct adjNode* createNode(int x){
 	struct adjNode* temp=(	struct adjNode* )malloc(sizeof(	struct adjNode));
 	temp->dest=x;
 	temp->next=NULL;
 	return temp;
 	};
+
+//------------CREATE GRAPH STUCT-----------------//	
+
 struct Graph{
 	int V;
 struct	adjList* array;
 };
+
+///////--------------CREATE GRAPH--------------------------------// 
+
 struct Graph* createGraph(int x){
 	struct Graph* t=(struct Graph*)malloc(sizeof(struct Graph));
 	t->V=x;
@@ -27,6 +42,8 @@ struct Graph* createGraph(int x){
 	}
 	return t;
 };
+
+//----------ADD EDGES ----------------------------//
 void addedge(struct Graph* g,int src,int dest){
 	struct adjNode* temp=createNode(dest);
 	temp->next=g->array[src].head;
@@ -35,6 +52,8 @@ void addedge(struct Graph* g,int src,int dest){
 	temp->next=g->array[dest].head;
 	g->array[dest].head=temp;
 }
+//--------PRINT GRAPH------------------//
+
 void print(struct Graph* g){
 	for(int v=0;v<g->V;v++){
 	struct adjNode* temp=g->array[v].head;
@@ -45,6 +64,7 @@ void print(struct Graph* g){
 	}
 	cout<<"]"<<endl;}
 }
+//-------------MAIN CALL--------------------//
 int main() {
 	int V = 5; 
     struct Graph* graph = createGraph(V); 
