@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void initialize(vector<int>&v,vector<int>&s,int n){
+    for(int i=0;i<=n;i++)
+   { v[i]=i;
+    s[i]=1;}
+}
+int root(vector<int>&v,vector<int>&s,int x){int i=x;
+    while(i!=v[i]){
+        i=v[i];
+    }
+    return i;
+}
+void uni(vector<int>&v,vector<int>&s,int a,int b){
+    int r_a=root(v,s,a);
+    int r_b=root(v,s,b);
+    if(r_a==r_b){
+        return;
+    }
+    if(s[r_a]>s[r_b]){
+        v[r_b]=r_a;
+        s[r_a]+=s[r_b];
+    }
+    else{
+        v[r_a]=r_b;
+        s[r_b]+=s[r_a];
+    }
+    
+}
+
+int main(){
+    int n,m;
+    cin>>n>>m;
+    vector<int>v(n);
+    vector<int>s(n);
+    initialize(v,s,n);
+    for(int i=0;i<m;i++){
+        int a,b;
+        cin>>a>>b;
+        uni(v,s,a,b);
+    }
+ //   int sum=0;
+    for(int i=1;i<=n;i++){cout<<(s[root(v,s,i)]-1)<<" ";}
+    return 0;
+}
